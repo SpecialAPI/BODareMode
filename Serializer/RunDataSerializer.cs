@@ -7,6 +7,7 @@ using System.Reflection;
 
 namespace BODareMode.Serializer
 {
+    // NOTE: This code is very experimental and is likely subject to change.
     public static class RunDataSerializer
     {
         private const string FieldType = "$TYPE$";
@@ -17,6 +18,7 @@ namespace BODareMode.Serializer
         private const string IListElement = "$ELEMENT$";
         private const string IDictionaryKey = "$KEY$";
         private const string IDictionaryValue = "$VALUE$";
+        private const string ScriptableObjectID = "$SOID$";
 
         private static bool CanSerializeField(FieldInfo field)
         {
@@ -65,6 +67,14 @@ namespace BODareMode.Serializer
 
             if (type == typeof(nint) || type == typeof(nuint) || typeof(Delegate).IsAssignableFrom(type))
                 return null;
+
+            if (typeof(ScriptableObject).IsAssignableFrom(type))
+            {
+                if(ScriptableObjectSerializer.TryDeserializeScriptable(type, dat.GetStringData($"{dataKey}_{ScriptableObjectID}"), out var so))
+                    return so;
+
+                return null;
+            }
 
             if(typeof(UnityEngine.Object).IsAssignableFrom(type))
                 return null;
@@ -346,6 +356,12 @@ namespace BODareMode.Serializer
 
             if (value is nint or nuint or Delegate)
                 return;
+
+            if(value is ScriptableObject so)
+            {
+                dat.SetStringData($"{dataKey}_{ScriptableObjectID}", so.name);
+                return;
+            }
 
             if (value is UnityEngine.Object)
                 return;
