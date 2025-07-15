@@ -10,10 +10,18 @@ namespace BODareMode.Triggers.Patches
     {
         [HarmonyPatch(typeof(CombatStats), nameof(CombatStats.AddCharacterToField))]
         [HarmonyPostfix]
-        public static void OnCharacterAddedToField_Postfix(CombatStats __instance, int characterID)
+        public static void OnAddedToField_Character_Postfix(CombatStats __instance, int characterID)
         {
             var ch = __instance.Characters[characterID];
-            CombatManager.Instance.PostNotification(CustomTriggers.OnAddedToField, ch, null);
+            CombatManager.Instance.PostNotification(CombatTriggers.OnAddedToField, ch, null);
+        }
+
+        [HarmonyPatch(typeof(CombatStats), nameof(CombatStats.AddEnemyToField))]
+        [HarmonyPostfix]
+        public static void OnAddedToField_Enemy_Postfix(CombatStats __instance, int enemyID)
+        {
+            var ch = __instance.Enemies[enemyID];
+            CombatManager.Instance.PostNotification(CombatTriggers.OnAddedToField, ch, null);
         }
     }
 }

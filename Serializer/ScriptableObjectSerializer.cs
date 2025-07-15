@@ -9,6 +9,7 @@ namespace BODareMode.Serializer
     {
         public static Dictionary<Type, Delegate> Deserializers = new()
         {
+            // Basegame types
             [typeof(CharacterSO)] = LoadedAssetsHandler.GetCharacter,
             [typeof(ConditionEncounterSO)] = LoadedAssetsHandler.GetConditionEncounter,
             [typeof(FreeFoolEncounterSO)] = LoadedAssetsHandler.GetFreeFoolEncounter,
@@ -22,6 +23,9 @@ namespace BODareMode.Serializer
             [typeof(SpeakerData)] = LoadedAssetsHandler.GetSpeakerData,
             [typeof(DialogueSO)] = LoadedAssetsHandler.GetDialogueData,
             [typeof(ZoneDataBaseSO)] = LoadedAssetsHandler.GetZoneDB,
+
+            // Custom types
+            [typeof(DareSO)] = DareDatabase.GetDare
         };
 
         public static bool CanSerializeType(Type type)

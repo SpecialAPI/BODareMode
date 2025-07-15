@@ -5,16 +5,13 @@ using System.Text;
 
 namespace BODareMode.Dares
 {
-    public class CharactersInCombatLimitDare : DareBase
+    public class CharactersInCombatLimitDare : DareSO
     {
-        public const string LocId = $"{Plugin.MOD_PREFIX}_{nameof(CharactersInCombatLimitDare)}";
-        public const string DefaultDesc = "I dare you to never have more than {0} party members in combat.";
-
-        public static readonly int Limit = 4;
+        public int Limit;
 
         public override void InitializeCombatNotifications()
         {
-            CombatManager.Instance.AddObserver(CheckCharacters, CustomTriggers.OnAddedToField);
+            CombatManager.Instance.AddObserver(CheckCharacters, CombatTriggers.OnAddedToField);
         }
 
         public void CheckCharacters(object sender, object args)
@@ -23,11 +20,6 @@ namespace BODareMode.Dares
                 return;
 
             FailDare();
-        }
-
-        public override string GetDescription()
-        {
-            return FormatAndLocalizeDescription(LocId, DefaultDesc, Limit);
         }
     }
 }

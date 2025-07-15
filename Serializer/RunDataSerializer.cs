@@ -44,7 +44,7 @@ namespace BODareMode.Serializer
         {
             output = default;
 
-            dataKey = $"{Plugin.MOD_PREFIX}_{dataKey}";
+            dataKey = $"{MOD_PREFIX}_{dataKey}";
             var objIds = new Dictionary<int, object>();
 
             if (DeserializeField(dataKey, dataKey, dat, objIds) is not T ret)
@@ -276,7 +276,7 @@ namespace BODareMode.Serializer
 
         public static void SerializeToRun(object obj, string dataKey, RunInGameData dat)
         {
-            dataKey = $"{Plugin.MOD_PREFIX}_{dataKey}";
+            dataKey = $"{MOD_PREFIX}_{dataKey}";
             var objIds = new Dictionary<object, int>();
             var lastId = 0;
 
