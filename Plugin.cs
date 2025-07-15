@@ -26,6 +26,8 @@ namespace BODareMode
             HarmonyInstance.PatchAll();
 
             DareModeLossHandler.Init();
+            DareListMenuHandler.Init();
+            DareDatabase.Init();
         }
     }
 }

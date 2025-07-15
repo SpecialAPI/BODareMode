@@ -8,6 +8,7 @@ namespace BODareMode.Dares
     public class CharactersInCombatLimitDare : DareSO
     {
         public int Limit;
+        public override object[] DescriptionArgs => [Limit];
 
         public override void InitializeCombatNotifications()
         {

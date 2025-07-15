@@ -56,6 +56,7 @@ namespace BODareMode
         public void OnNewRunStarted()
         {
             isDareRun = true;
+            daresForRun.AddRange(DareDatabase.GetDares(DareAmountPerRun));
 
             revealedDares = 0;
             TryAddNextDare();
