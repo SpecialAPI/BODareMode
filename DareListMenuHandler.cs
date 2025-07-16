@@ -17,15 +17,20 @@ namespace BODareMode
         public static void Init()
         {
             overworldPrefab = Bundle.LoadAsset<GameObject>("OverworldDareMenuHolder");
-            var menu = overworldPrefab.AddComponent<DareListMenuHandler>();
-            var paper = overworldPrefab.transform.Find("Paper");
+            SetUpDareList(overworldPrefab, false);
+        }
+
+        public static DareListMenuHandler SetUpDareList(GameObject go, bool lossSequence)
+        {
+            var menu = go.AddComponent<DareListMenuHandler>();
+            var paper = go.transform.Find("Paper");
 
             menu.topText = paper.Find("Top Text").GetComponent<TMP_Text>();
             menu.bottomText = paper.Find("Bottom Text").GetComponent<TMP_Text>();
 
             menu.dareHolders = [];
             var dareList = paper.Find("DareListContainer");
-            for(var i = 0; i < dareList.childCount; i++)
+            for (var i = 0; i < dareList.childCount; i++)
             {
                 var dareContainer = dareList.GetChild(i);
 
@@ -37,8 +42,17 @@ namespace BODareMode
                 uiHolder.descriptionText = dareContainer.Find("Description").GetComponent<TMP_Text>();
                 uiHolder.index = i;
 
+                var red = uiHolder.titleText.color; 
+                var black = uiHolder.descriptionText.color;
+                uiHolder.normalTitleColor = lossSequence ? black : red;
+                uiHolder.failedTitleColor = red;
+                uiHolder.normalDescColor = black;
+                uiHolder.failedDescColor = red;
+
                 menu.dareHolders.Add(uiHolder);
             }
+
+            return menu;
         }
 
         public void ShowMenu()
@@ -51,7 +65,7 @@ namespace BODareMode
             gameObject.SetActive(false);
         }
 
-        public void SetInformation()
+        public void SetInformation(int failedDare = -1)
         {
             topText.text = CustomLoc.GetUIData(CustomUILoc.DarePageTopTextID, CustomUILoc.DarePageTopTextDefault);
             bottomText.text = CustomLoc.GetUIData(CustomUILoc.DarePageBottomTextID, CustomUILoc.DarePageBottomTextDefault);
@@ -73,7 +87,7 @@ namespace BODareMode
                 }
 
                 dareHolder.gameObject.SetActive(true);
-                dareHolder.SetInformation(i < DareManager.Instance.activeDares.Count ? DareManager.Instance.activeDares[i] : null);
+                dareHolder.SetInformation(i < DareManager.Instance.activeDares.Count ? DareManager.Instance.activeDares[i] : null, i == failedDare);
             }
         }
     }

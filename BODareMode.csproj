@@ -49,6 +49,9 @@
     <Reference Include="Unity.TextMeshPro">
       <HintPath>..\References\Unity\Unity.TextMeshPro.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\References\Unity\UnityEngine.UI.dll</HintPath>
+    </Reference>
     <Reference Include="YarnSpinner">
       <HintPath>..\References\Unity\YarnSpinner.dll</HintPath>
     </Reference>

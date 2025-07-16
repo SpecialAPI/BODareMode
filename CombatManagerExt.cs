@@ -9,6 +9,7 @@ using Mono.Cecil.Cil;
 using System.Collections;
 using BrutalAPI;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 namespace BODareMode
 {
@@ -30,15 +31,15 @@ namespace BODareMode
 
         public IEnumerator DoDareModeGameOver()
         {
-            var combatEndWaitTimer = LoadedDBsHandler.CombatData.CombatEndWaitTimer;
-            yield return new WaitForSeconds(3f);
+            if (manager._isGameRun && manager._shouldRunSave)
+                SaveDataManager_2024.Delete_Run();
 
+            yield return new WaitForSeconds(3f);
             yield return lossHandler.DoLossDialogue();
 
             manager._soundManager.SetPauseData(false, false, false);
             DOTween.KillAll();
-
-            yield break;
+            SceneManager.LoadScene(manager._mainMenuSceneName);
         }
 
         public static MethodInfo ddmogo_oc = AccessTools.Method(typeof(CombatManagerExt), nameof(DoDareModeOverrideGameOver_OverrideCheck));

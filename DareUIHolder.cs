@@ -12,15 +12,19 @@ namespace BODareMode
         public TMP_Text descriptionText;
         public int index;
 
-        public void SetInformation(DareSO dare)
+        public Color normalTitleColor;
+        public Color failedTitleColor;
+        public Color normalDescColor;
+        public Color failedDescColor;
+
+        public void SetInformation(DareSO dare, bool failed = false)
         {
             var titleFormat = CustomLoc.GetUIData(CustomUILoc.DareTitleID, CustomUILoc.DareTitleDefault);
             titleText.text = string.Format(titleFormat, index + 1);
+            titleText.color = failed ? failedTitleColor : normalTitleColor;
 
-            if(dare != null)
-                descriptionText.text = dare.GetDescription();
-            else
-                descriptionText.text = string.Empty;
+            descriptionText.text = dare != null ? dare.GetDescription() : string.Empty;
+            descriptionText.color = failed ? failedDescColor : normalDescColor;
         }
     }
 }
