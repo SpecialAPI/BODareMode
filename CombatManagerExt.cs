@@ -17,6 +17,7 @@ namespace BODareMode
     public class CombatManagerExt : MonoBehaviour
     {
         public bool IsDareModeLost;
+        public bool WasFirstAbilityUsed;
         public CombatManager manager;
         public DareModeLossHandler lossHandler;
 
